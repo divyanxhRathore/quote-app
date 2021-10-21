@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="main" id="image">
+        <div class="quoteBox">
+            <div class="header">
+                <h3>I will keep you motivated!</h3>
+            </div>
+            <hr>
+            <p id="quote">If You born poor its not your mistake but if you die poor its your mistake</p>
+            <span id="author">-Bill Gates</span>
+        </div>
+        <div class="next-btn">
+           <button type="button" id="next-btn">Motivate Me More!</button>
+        </div>
+    </div>
+</body>
+
+<script>
+    const quoteHead = document.getElementById("quote");
+    const btn = document.getElementById("next-btn");
+    const authorHead = document.getElementById("author");
+    const image = document.querySelector(".main");
+    function generateRandom(data){
+        const rn = Math.floor(Math.random() * 50 );
+        const quote = data[rn].text;
+        const author = data[rn].author;
+        quoteHead.innerHTML = quote;
+        authorHead.innerHTML = author;
+    }
+
+    function getRandomImg(){
+        let keywords = ["success", "dream", "starrysky", "stars", "cars"];
+        const rn = Math.floor(Math.random() * 5 );
+        image.style.backgroundImage = `url("https://source.unsplash.com/1600x900/?${keywords[rn]}")`
+    }
+
+    async function callAPI(){
+        let api = "https://type.fit/api/quotes";
+        const rawData = await fetch(api);
+        const jsonData = await rawData.json();
+        generateRandom(jsonData);
+        //image.style.backgroundImage = "url('https://source.unsplash.com/1600x900/?motivating')"
+        getRandomImg();
+    }
+
+    btn.addEventListener("click", callAPI);
+
+</script>
+<script src="script.js"></script>
+</html>
